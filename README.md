@@ -1,2 +1,1 @@
-# seniordesign
-Learnet Senior Design
+index HTML is found in Learnet folder, along with the mystyles.css
