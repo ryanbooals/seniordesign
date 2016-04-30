@@ -1,0 +1,351 @@
+textarea{
+  resize: none;
+}
+
+.eight{
+  width: 90%;
+}
+.two{
+  width: 10%;
+  height: 100%;
+}
+
+
+.class a.active{
+  background-color: black;
+}
+
+.ui-autocomplete { 
+ max-height: 70%;
+ overflow-y: scroll;
+ overflow-x: hidden;
+}
+
+#classListButt{
+  width: 100%;
+}
+#taskList{
+  width: 100%;
+}
+
+.mycourse{
+
+  color: black;
+}
+
+
+.cp{
+  margin: 0px;
+  padding: 0px;
+}
+
+#profpic{
+float: left;
+line-height: 30px;
+margin-right: 3px;
+} 
+
+#authorName4upload{
+  float: left;
+}
+
+#addCourseButt{
+
+  height: 30px;
+  background-color: transparent;
+  border: none;
+  margin-top: 3px;  
+}
+#addCourseButt:hover{
+  color: white;
+
+}
+
+#signOutButton{
+  float: right;
+  background-color: white;
+  color: black;
+  border: none;
+}
+
+#addCourseButton{
+  float: right;
+  background-color: white;
+  color: black;
+  border: none;
+}
+
+.left{
+  float: left;
+}
+
+.right{
+  float: right;
+  padding: 0px;
+}
+
+.clear{
+  clear: both;
+}
+.headerbutton{
+  float: right;
+  color: black;
+  border: none;
+  font-size: 16px;
+  background-color: #26c6da;
+  line-height: 40px;
+  border-left: 1px solid #0097a7;
+}
+
+.headerbutton:hover{
+  background-color: #00acc1;
+  color: white;
+}
+
+
+.headertext{
+  float: left;
+}
+
+.acomment{
+
+  background: #f2f2f2;
+  padding: 10px;
+  margin-bottom: 5px;
+  border-left: 3px solid gray;
+
+}
+
+.acomment:hover{
+  border-left: 3px solid #26c6da;
+}
+
+.courses a{
+  display: none;
+}
+
+.courses{
+  width: 100%;
+  text-align: center;
+  color: black;
+  padding: 5px;
+  cursor: pointer;
+  cursor: hand;
+
+}
+
+.courses:hover{
+  background-color: #26c6da;
+  color: white;
+}
+
+.courses:hover a{
+  display: inline-block;
+  color: red;
+}
+
+.ng-binding{
+  margin-bottom: 0px;
+}
+
+h3{
+    padding: 0px;
+    margin: 0px;
+  }
+#courseList
+  {
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
+  #selCourse{
+   padding-left: 50px;
+  }
+  body{
+    height: 100%;
+    width: 100%;
+    background-color: gray;
+    overflow: hidden;
+            }
+
+  #containers{
+    height: 93%;
+    margin: 10px;
+
+  }
+
+  #left{
+    height: 100%;
+    border: 5px solid #6A6A6A;
+    background-color: #6A6A6A;
+
+ 
+  }
+  #right{
+    background-color: gray;
+    height: 100%;
+    border: 5px solid #6A6A6A;
+    padding: 0px;
+
+  }
+  #middle{
+    height: 100%;
+    border: 5px solid #6A6A6A;
+    overflow-x: hidden;
+    overflow-y: hidden;
+
+  }
+
+  #leftcontents{
+    height: 100%;
+    padding: 0px;
+    background-color: #6A6A6A;
+
+
+  }
+  #rightcontents{
+    height: 100%;
+    width: 100%;
+    background-color: #b2ebf2;
+    text-align: center;
+    padding: 5px;
+    }
+  #middlecontents{
+    height: 100%;
+    overflow: auto;
+    padding: 0px;
+
+  }
+
+  .forum{
+    border-left: solid 10px #b2ebf2;
+    padding: 10px;
+    background-color: white;
+    margin-bottom: 10px;
+  }
+
+  hr{
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid gray;
+    margin: 1em 0;
+    padding: 0; 
+  }
+
+  .courseid{
+    color: gray;
+    float: right;
+    font-size: 10px;
+  }
+#eCampPopDiv .popover {
+width:1000px;
+height:375px;
+}
+
+  textarea{
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+
+  #iframediv{
+
+    height: 75%;
+    width: 100%;
+    background-color: #999999;
+  }
+
+  #carouseldiv{
+    height: 25%;
+    width: 100%;
+    border-top: 10px solid #6A6A6A;
+    background-color: #b2ebf2;
+    padding: 10px;
+  }
+
+  #mainiframe{
+    height: 100%;
+    width: 100%;
+    border: none;
+  }
+
+  #binderheader{
+    height: 40px;
+    background-color: #26c6da;
+    border-top: 5px solid #6A6A6A;
+    border-right: 5px solid #6A6A6A;
+    border-left: 5px solid #6A6A6A;
+    line-height: 40px;
+    color: white;
+    padding-right: 0px;
+  }
+
+  h2{
+    padding: 0px;
+    margin: 0px;
+    font-size: 20px;
+    font-family: helvetica;
+    line-height: 40px;
+  }
+
+  #forumheader{
+    height: 40px;
+    background-color: #26c6da;
+      border-top: 5px solid #6A6A6A;
+    border-right: 5px solid #6A6A6A;
+    border-left: 5px solid #6A6A6A; 
+     line-height: 40px;
+     color: white;
+    padding-right: 0px;
+    }
+
+  #sidebarheader{
+    height: 40px;
+    color: black;
+    background-color: white;
+     border-top: 5px solid #6A6A6A;
+    border-right: 5px solid #6A6A6A;
+    border-left: 5px solid #6A6A6A; 
+     line-height: 40px;
+     text-align: right;
+  }
+
+  #hi{
+
+    background-color: gray;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+  }
+
+
+
+  .notes{
+    background-color: white;
+    height: 100%;
+    border: solid 1px black;
+    padding-top: 10px;
+  }
+
+  .noteiframe{
+    height: 40%;
+    width: 100%;
+  }
+
+  .notedescription{
+    height: 50%;
+    overflow: hidden;
+  }
+
+  .noted{
+    clear: both;
+    height: 90%;
+    overflow: auto;
+  }
+
+  #carouseldiv{
+    position: relative;
+    top: 0px;
+    left: 0px;
+  }
+

@@ -1,0 +1,414 @@
+<html lang="en"  ng-app = "myApp">
+<head>
+        <meta charset="UTF-8"/>
+        <title>Learnet</title>
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/smoothness/jquery-ui.css">
+        <!-- Bootstrap Bill -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+	  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" type="text/javascript"></script>
+        <!-- Angular -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js" type = "text/javascript" ></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+        <!-- Javascript md5 Encryption files -->
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/core-min.js" type = "text/javascript" ></script>
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/md5-min.js" type = "text/javascript" ></script>
+        <script src = "password.js"></script>
+        <!-- Angular Controllers -->
+        <script src = "../js/controllers/addCourseCtrl.js"></script>
+        <script src = "../js/controllers/addNoteCtrl.js"></script>
+        <script src = "../js/controllers/addForumCtrl.js"></script>
+        <script src = "../js/controllers/notesCtrl.js"></script>
+        <script src = "../js/controllers/forumCtrl.js"></script>
+        <script src = "../js/controllers/headersCtrl.js"></script>
+        <script src = "../js/controllers/rightContentCtrl.js"></script>
+        <script src = "../js/controllers/logInCtrl.js"></script>
+        <!-- jQuery stuff -->
+        <script src = "jQueryStuff.js"></script>
+        <script src = "jQcode.js"></script>
+        <link href="../css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+        <!-- canvas-to-blob.min.js is only needed if you wish to resize images before upload.
+             This must be loaded before fileinput.min.js -->
+        <script src="../js/plugins/canvas-to-blob.min.js" type="text/javascript"></script>
+        <script src="../js/fileinput.min.js" type="text/javascript"></script>
+        <!-- Captch -->
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+        <link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+
+<style>
+
+
+
+</style>
+
+<body>
+<div id="containers" class = "row">
+
+  <div ng-controller = "headersCtrl">
+    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" id="binderheader">
+        <h2 class="headertext"> <b>Binder</b>: {{courseName}} </h2>
+        <button class="headerbutton" data-toggle="modal" data-target="#noteModal" ng-show = "courseName"> Add A Note</button>
+    </div>
+    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" id="forumheader">
+        <h2 class="headertext"> <b>Forum</b>: <span id = "courseName4upload" value = "{{courseName}}">{{courseName}} </span> </h2>
+        <button  data-toggle ="modal" data-target ="#forumModal" class="headerbutton" ng-show = "courseName"> Add Forum Post</button>
+    </div>
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" id="sidebarheader">
+        <button style = "float:left; font-size: 18px;" ng-show = "!loggedIn" id ="addCourseButton" type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Log In or Register</button>
+        <button ng-show = "loggedIn" id = "signOutButton" type = "button" ng-click = "signOut()"> Sign Out </button>
+        <h2>
+          <span id = "profpic" class="glyphicon glyphicon-user" aria-hidden="true"></span>
+        </h2>
+        <h2>
+         <span id = "authorName4upload" value = "{{username}}"> {{username}} </span>
+        </h2>
+    </div>
+  </div>
+
+  <!--
+  The left side of of the web app will display the following:
+  -iframe of current note
+  -carousel of other notes
+  -button to add the note
+  -breadcrumb trail to allow user to tell what notes they are looking at
+  -->
+  <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" id="left">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="leftcontents" ng-controller="notesCtrl">
+        <div id="iframediv">
+          <iframe id="mainiframe" src="{{firstNote.fileDest}}" name="main"></iframe>
+        </div>
+        <div id="carouseldiv">
+          <div id="hi" class="container-fluid">
+            <div class="row">
+              <div ng-repeat = "poop in notes" class="col-xs-4 col-sm-4 col-md-4 col-lg-4 notes">
+                  <a href="{{poop.fileDest}}" target = "main">
+                  <iframe src="{{poop.fileDest}}" scrolling="no" class="noteiframe"></iframe>
+                  <div class="notedescription">
+                      <p class = "left">{{poop.title}}</p>
+                      <a class="btn right" href="{{poop.fileDest}}" download="{{poop.title}}"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+                      <p class="noted">{{poop.description}}</p>
+                  </div>
+                  </a>
+              </div> 
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--
+  The Middle of the web app will display the following:
+  -the forum
+  -button to add to the forum
+  -->
+<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" id="middle">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="middlecontents" ng-controller = "forumCtrl">
+      <div class = "forum" ng-show = "noForums">
+          <h5 class="courseid">0000</h5>
+          <h3>There are no Posts in the Class</h3>
+           <hr>
+           <h5>By Learnet Admin</h5>
+           <p>Click "add forum post" in the top right corner to add the first post!</p>
+      </div>
+      <div ng-repeat = "forum in posts">
+        <div class="forum">
+            <h5 class="courseid">{{forum.Id}}</h5>
+            <h3>{{forum.Title}}</h3>
+            <hr>
+            <h5>By {{forum.Author}}</h5>
+            <p>   {{forum.Content}}   </p>
+            <h5 ng-show = "comments.length > 0">Comments:</h5>
+            <div ng-repeat = "comment in comments">
+              <div ng-show = "comment.postId == forum.Id">
+                <div class="acomment">
+                    <strong> {{comment.Author}} </strong>
+                    <p>{{comment.Content}}</p>
+                </div>
+              </div>
+            </div>
+            <textarea class = "textAr" placeholder="Add a Comment..." ng-model="content"></textarea>
+            <button ng-click = "addComment(forum.Id, content)">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--
+  The right side of the web app will display the following:
+  -place to log in
+  -your classes
+  -in the future chat
+  -all classes
+  -->
+
+<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" id="right">
+      <div id="rightcontents" ng-controller ="rightContentCtrl">
+            <div ng-show = "loggedIn" id="modifyCoursesDiv">
+                <div><h2>My Courses</h2></div>
+                <div id="courselist" ng-repeat = "selCourse in selectedCourses track by $index" class = "showCourseSection">
+                    <div class="courses" ng-click ="changeCourse(selCourse)">
+                                <p> {{selCourse}} <a id="remCourseButt" ng-click="removeCourse(selCourse)"> X</a></p>
+                    </div>
+                </div>
+              
+                <label class="control-label"><h2>Add a Course</h2></label>
+                <form ng-submit= "addCourse()" id = "addCourse">
+
+                 <div> 
+                      <input placeholder = "Enter a Course" ng-change = "checkUnspacedInput()" ng-model = "courseInput" type="text" class="form-control eight left" id="courseInput">
+                      <button class="two left" id = "addCourseButt"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                 </div>
+
+                </form>
+             
+
+                <br><br>
+                <div id="eCampPopContent" style="display: none">
+                    <img style = "margin: auto;" width = "240px;"src ="ecampus.gif">
+                    <br/>
+                    <p style = "font-size: 18px;"> Add all your courses easily by copying and pasting your schedule from ECAMPUS.
+                    Highlight your schedule, copy it, then paste it in the field below
+                    </p>
+                </div>
+                <div id="eCampPopTitle" style="font-size: 20px; display: none">
+                    <b>Add classes via ECAMPUS:</b>
+                </div>
+                <div id = "eCampPopDiv" >
+                    <a id = "eCampPop" href="#" data-placement="left" data-toggle="popover" data-trigger="focus" >
+                    <span class="glyphicon glyphicon-question-sign"></span>
+                    </a>
+                    <label class="control-label">Paste ECAMPUS Schedule</label>
+                    <input placeholder = "Ecampus Pasting" ng-model = "eCampInput" type="text" class="form-control" id="eCampInput" ng-change = "eCamp()">
+                </div>
+            </div>
+      </div>
+</div>
+
+
+
+</div>
+</body>
+
+<!--
+                  <form class="form-horizontal">
+                   <div class="control-group success">
+                     <input class = "form-control" ng-focus ="stopAnimation = true" id = "animate">
+                   </div>
+                 </form>
+                  <div id="taskList" style="position:absolute; bottom: 175px; margin: auto;">
+                  <a ng-click = "animateIt()"id = "taskListButt" style ="font-size: 24px;"class = "btn btn-info btn-lg" href="#" data-placement="left" data-toggle="popover" data-trigger="focus" > Test User Task List
+                  </a>
+                  <div id="popoverContent" style="display: none">
+                      <div style = "font-size: 18px;">
+                        <p><b>1.</b> Register with SCU Email</p>
+                        <p><b>2.</b> Add your courses to "My Courses" </p>
+                        <p><b>3.</b> Go to a Course page </p>
+                        <p><b>4.</b> Make at least one Forum Post on the Course Page</p>
+                        <p><b>5.</b> Make at least one Comment on a Forum (it can be your own)</p>
+                        <p><b>6.</b> Add at least one Note to the Course Binder </p>
+                        <p><b>7.</b> Sign out, then Sign back In </p>
+                      </div>
+                    </div>
+                    <div id="popoverTitle" style="font-size: 20px; display: none">
+                        <b> Test User Task List: </b>
+                    </div>
+              <style>
+              #taskList .popover {
+                  width:600px;
+                  height:450px;
+                }
+              </style>
+-->
+
+
+
+           
+
+<div class="modal fade" id="noteModal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content" ng-controller="addNoteCtrl">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"> Add Note to <strong>{{course}} </strong> Binder </h4>
+      </div>
+
+<!--Body -->
+  <div class="modal-body">
+
+
+  <!--- Title Input -->
+  <label class="control-label">Title</label>
+   <input placeholder = "Title cannot be empty" ng-model = "titleInput" type="text" class="form-control" id="noteTitle">
+
+  <div id="noteDescription" ng-show="titleInput">
+    <hr>
+    <label class="control-label">Description</label>
+    <textarea rows = "3" maxlength="250" placeholder = "Optional (max 250 characters)..." ng-model = "descriptionInput" type="text" class="form-control" id="descriptionInput"></textarea>
+
+      <div style="color: grey;" ng-show ="descriptionInput" id="textarea_feedback"></div>
+  </div>
+
+
+  <!--- tags  --->
+   <div id="allTags" ng-show="titleInput">
+    <!--
+    <label class="control-label">Tags</label>
+    <ul id="myTags">
+
+    </ul>
+  -->
+  <!-- end of tags div -->
+  </div>
+
+
+  <!--- file Select form --->
+    <form id="uploadFileButton" action="" method="post" enctype="multipart/form-data"  ng-show= "titleInput">
+    <hr>
+        <label class="control-label">Select File</label>
+      <input id="noteFile" name="file" accept = ".png, .jpeg, .txt, .pdf"type="file" multiple class="file-loading">
+      * PNG, JPG, TXT, and PDF files only
+    </form>
+
+    <!-- end of modal body -->
+
+
+  </div>
+
+      <div class="modal-footer">
+
+      </div>
+
+    <!-- end of Modal -->
+    </div>
+
+  </div>
+</div>
+
+
+<div id="forumModal" class="modal fade" role="dialog" ng-controller = "addForumCtrl">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" >Add Forum Post to <strong>{{course}}</strong> </h4>
+      </div>
+
+
+      <div class="modal-body">
+
+      <form id="forumForm">
+
+        <input  id="forumTitle" placeholder = "Title" ng-change = "getCourseandUser()" ng-model = "title" type="text" class="form-control">
+        <br />
+        <textarea id ="forumContent" rows="6" cols = "60" placeholder="Content" ng-model = "content" > </textarea>
+
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click = "submitPost()">Submit</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="modal fade" id="myModal" role="dialog" ng-controller="logInCtrl" ng-init="initUser()">
+  <div class="modal-dialog">
+  <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" ng-show = "!registering">Log In</h4>
+        <h4 class="modal-title" ng-show = "registering"> Register</h4>
+      </div>
+    <!--Body -->
+      <div class="modal-body">
+        <div ng-show = "isLogged">
+          <strong>Logged In as {{unInput}}</strong>
+        </div>
+        <form  id = "userInputForm" method="post" ng-show = "!isLogged">
+          <label class="control-label">SCU Email</label>
+          <input placeholder = "Enter SCU Email" ng-keyup="$event.keyCode == 13 && checkUsername()" ng-change = "checkFill()" ng-model = "unInput" type="text" class="form-control" id="username">
+          <div ng-show = "isSCUEmail">
+              <br/>
+              <label class="control-label">Password</label>
+              <input placeholder = "Enter Password" ng-keyup="$event.keyCode == 13 && checkUsername()" ng-change = "checkFill()" ng-model = "pwInput" type="password" class="form-control" class="password" autocomplete = "off">
+              <div ng-show = "registering">
+                  <br/>
+                  <label class="control-label">Confirm Password</label>
+                  <input placeholder = "Confirm Password" ng-change = "checkFill()" ng-model = "confirmPW" type="password" class="form-control" class="password">
+                  <br/>
+                  <div ng-show = "regFilled && confirmPW == pwInput" class="g-recaptcha" data-callback="enablebtn" data-sitekey="6LcxOhgTAAAAAIbLv1UXoKfTPYeMX6xiEpagSaiN"></div>
+              </div>
+          </div>
+        </form>
+      </div>
+    <!-- end of modal content -->
+      <div class="modal-footer">
+        <button ng-disabled = "!filled" ng-show = "!registering" type="button"  ng-click ="checkUsername()"class="btn btn-success">Log In</button>
+        <button disabled = "true" id="registerButt" ng-show = "registering" type="button"  ng-click = "register()"class="btn btn-success">Register</button>
+        <div style = "float:left"  ng-show = "!registering">
+          Not Registered?
+          <button type="button"  ng-click = "registering = true;"class="btn btn-info">Sign Up</button>
+        </div>
+        <div style = "float:left"  ng-show = "registering">
+          Already Registered?
+          <button type="button"  ng-click = "registering = false;"class="btn btn-info">Log In</button>
+        </div>
+      </div>
+        <!-- end of Modal -->
+      </div>
+  </div>
+</div>
+
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();
+});
+</script>
+<script>
+                  $(document).ready(function(){
+            $('#taskListButt').popover(
+              {
+                html: true,
+                content: function()
+                {
+                  return $('#popoverContent').html();
+                },
+                title: function()
+                {
+                  return $('#popoverTitle').html();
+                }
+              }
+            );
+
+            $('#eCampPop').popover(
+              {
+                html: true,
+                content: function()
+                {
+                  return $('#eCampPopContent').html();
+                },
+                title: function()
+                {
+                  return $('#eCampPopTitle').html();
+                }
+              }
+            );
+            });
+</script>
+
+
+</html>

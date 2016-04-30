@@ -1,0 +1,69 @@
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+
+<div class="modal fade" id="myModal" role="dialog" ng-controller="logInCtrl">
+
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content"  >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" ng-show = "!registering">Log In</h4>
+        <h4 class="modal-title" ng-show = "registering"> Register</h4>
+      </div>
+
+<!--Body -->
+  <div class="modal-body">
+
+    <div ng-show = "isLogged">
+      <strong>Logged In as {{unInput}}</strong>
+
+    </div>
+
+
+    <form  id = "userInputForm" autocomplete = "off" method="post" ng-show = "!isLogged">
+
+              <label class="control-label">Username </label>
+              <input placeholder = "Enter Username" ng-change = "checkFill()" ng-model = "unInput" type="text" class="form-control" id="username" ng-change = "eCamp()">
+
+          <br />
+          <label class="control-label">Password</label>
+
+         <input placeholder = "Enter Password" ng-change = "checkFill()" ng-model = "pwInput" type="text" class="form-control" id="password" autocomplete = "off">
+
+        <div ng-show = "registering">
+          <br >
+         <label class="control-label">Confirm Password</label>
+          <input placeholder = "Confirm Password" ng-change = "checkFill()" ng-model = "confirmPW" type="text" class="form-control">
+
+          <br />
+            <div class="g-recaptcha" data-sitekey="6LcxOhgTAAAAAIbLv1UXoKfTPYeMX6xiEpagSaiN"></div>
+        </div>
+       </form>
+       {{result}}
+
+  </div>
+
+    <!-- end of modal content -->
+      <div class="modal-footer">
+        <button ng-disabled = "!filled" ng-show = "!registering" type="button"  ng-click ="checkUsername()"class="btn btn-success">Log In</button>
+        <button ng-disabled = "!regFilled" ng-show = "registering" type="button"  ng-click = "register()"class="btn btn-success">Register</button>
+
+        <div style = "float:left"  ng-show = "!registering">
+          Not Registered?
+          <button type="button"  ng-click = "registering = true;"class="btn btn-info">Sign Up</button>
+        </div>
+
+        <div style = "float:left"  ng-show = "registering">
+          Already Registered?
+          <button type="button"  ng-click = "registering = false;"class="btn btn-info">Log In</button>
+        </div>
+
+      </div>
+
+    <!-- end of Modal -->
+  </div>
+</div>
+
+</div>
